@@ -1,4 +1,3 @@
 # Pong
-'''
-hola
-'''
+
+Un proyecto sencillo para practicar el desarrollo de juegos en pygame.
