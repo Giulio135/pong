@@ -1,4 +1,5 @@
 import pygame
+import random
 
 class Player1(pygame.sprite.Sprite):
     def __init__(self, groups):
@@ -28,16 +29,32 @@ class Player2(pygame.sprite.Sprite):
         self.direction.y =  int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP])
         self.rect.center += self.direction * self.speed
 
+class Ball(pygame.sprite.Sprite):
+    def __init__(self, groups):
+        super().__init__(groups)
+        self.image = pygame.transform.scale(pygame.image.load('ball.png'), (25,25))
+        self.x = DISPLAY_W / 2
+        self.y = DISPLAY_H / 2
+        self.rect = self.image.get_frect(center=(self.x, self.y))
+        self.direction = pygame.math.Vector2((random.choice([-1,1]),random.choice([-1,1])))
+        self.speed = 3
+    def update(self):
+        touching_sprite = pygame.spritecollideany(self,)
+        self.direction = self.direction.normalize()
+        self.rect.center += self.direction * self.speed
+
 DISPLAY_W = 500
 DISPLAY_H = 500
 running = True
 
 all_sprites = pygame.sprite.Group()
+players = pygame.sprite.Group()
 clock = pygame.time.Clock()
 
 display_surf = pygame.display.set_mode((DISPLAY_W, DISPLAY_H))
-player1 = Player1(all_sprites)
-player2 = Player2(all_sprites)
+player1 = Player1((all_sprites, players))
+player2 = Player2((all_sprites, players))
+ball = Ball(all_sprites)
 
 while running:
     clock.tick(60)
