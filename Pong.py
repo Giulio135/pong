@@ -33,13 +33,17 @@ class Ball(pygame.sprite.Sprite):
     def __init__(self, groups):
         super().__init__(groups)
         self.image = pygame.transform.scale(pygame.image.load('ball.png'), (25,25))
-        self.x = DISPLAY_W / 2
-        self.y = DISPLAY_H / 2
-        self.rect = self.image.get_frect(center=(self.x, self.y))
-        self.direction = pygame.math.Vector2((random.choice([-1,1]),random.choice([-1,1])))
-        self.speed = 3
+        self.rect = self.image.get_frect(center=( DISPLAY_W / 2, DISPLAY_H / 2))
+        self.direction = pygame.math.Vector2((random.uniform(-1,1),random.uniform(-1,1)))
+        self.speed = 7
     def update(self):
-        touching_sprite = pygame.spritecollideany(self,)
+        touching_sprite = pygame.sprite.groupcollide(balls, players, False, False)
+        touching_edge = self.rect.y <= 0 or self.rect.y >= DISPLAY_H
+        print(touching_edge)
+        if touching_sprite:
+            self.direction.x *= -1
+        if touching_edge:
+            self.direction.y *= -1
         self.direction = self.direction.normalize()
         self.rect.center += self.direction * self.speed
 
@@ -49,12 +53,14 @@ running = True
 
 all_sprites = pygame.sprite.Group()
 players = pygame.sprite.Group()
+balls = pygame.sprite.Group()
+
 clock = pygame.time.Clock()
 
 display_surf = pygame.display.set_mode((DISPLAY_W, DISPLAY_H))
 player1 = Player1((all_sprites, players))
 player2 = Player2((all_sprites, players))
-ball = Ball(all_sprites)
+ball = Ball((all_sprites, balls))
 
 while running:
     clock.tick(60)
