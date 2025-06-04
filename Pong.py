@@ -4,7 +4,8 @@ import random
 class Player1(pygame.sprite.Sprite):
     def __init__(self, groups):
         super().__init__(groups)
-        self.image = pygame.transform.scale(pygame.image.load('player1.png'), (50,100))
+        self.image = pygame.surface.Surface((20,100))
+        self.image.fill((0,0,0))
         self.x = 30
         self.y = DISPLAY_H / 2
         self.rect = self.image.get_frect(center=(self.x, self.y))
@@ -18,7 +19,8 @@ class Player1(pygame.sprite.Sprite):
 class Player2(pygame.sprite.Sprite):
     def __init__(self, groups):
         super().__init__(groups)
-        self.image = pygame.transform.scale(pygame.image.load('player1.png'), (50,100))
+        self.image = pygame.surface.Surface((20,100))
+        self.image.fill((0,0,0))
         self.x = DISPLAY_W - 30
         self.y = DISPLAY_H / 2
         self.rect = self.image.get_frect(center=(self.x, self.y))
@@ -32,7 +34,8 @@ class Player2(pygame.sprite.Sprite):
 class Ball(pygame.sprite.Sprite):
     def __init__(self, groups):
         super().__init__(groups)
-        self.image = pygame.transform.scale(pygame.image.load('ball.png'), (25,25))
+        self.image = pygame.surface.Surface((20,20))
+        self.image.fill((0,0,0))
         self.rect = self.image.get_frect(center=( DISPLAY_W / 2, DISPLAY_H / 2))
         self.direction = pygame.math.Vector2((random.uniform(-1,1),random.uniform(-1,1)))
         self.speed = 7
